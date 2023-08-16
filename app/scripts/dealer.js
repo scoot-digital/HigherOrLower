@@ -22,33 +22,34 @@ function playerInteraction(value){
     if (value < questions.length){
 
         //  Ask the next question
-        console.log(questions[value]);  
+        console.log(questions[value]);
+        
+        //  Get the answer from the player
+        response = prompt();
 
-    }
-    
-    //  Get the answer from the player
-    response = prompt();
+        //  -----   Check the answer    -----
 
-    //  -----   Check the answer    -----
+        //  If the first question is being answered
+        if(value = 0){
 
-    //  If the first question is being answered
-    if(value = 0){
+            if (response = "lower" && cardsDealt[1] > cardsDealt[0]){
 
-        if (response = "lower" && cardsDealt[1] > cardsDealt[0]){
+                playerLoss = true;
 
-            playerLoss = true;
+            } else if (response = "higher" && cardsDealt[1] < cardsDealt[0]){
 
-        } else if (response = "higher" && cardsDealt[1] < cardsDealt[0]){
+                playerLoss = true;
 
-            playerLoss = true;
+            }
+
+        //  If the second question is being answered
+        } else if (value = 1){
+
+            
 
         }
 
-    //  If the second question is being answered
-    } else if (value = 1){
-
-        
 
     }
-
+    
 }

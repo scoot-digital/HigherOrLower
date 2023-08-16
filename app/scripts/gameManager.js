@@ -37,7 +37,7 @@ function initialiseListeners(){
  */
 function runGame(){
 
-    //  Continue the game until 5 cards have been dealt
+    //  Continue the game until 5 cards have been dealt or the player has answered incorrectly
     while (numCardsDealt < 5 && !playerLoss){
 
         //  Deal a playing card
@@ -50,5 +50,20 @@ function runGame(){
         playerInteraction(numCardsDealt -1);        
 
     }   
+
+    //  (After 5 cards have been dealt or the player has answered incorrectly)
+    //  If the player has answered incorrectly
+    if(playerLoss){
+
+        //  Inform them and give them the opportunity to play again
+        console.log("Unforunately, that is incorrect. Would you like to restart?");
+
+    //  Otherwise
+    } else {
+
+        //  Inform the player they have won
+        console.log("Congratualations, you won!");
+
+    }
 
 };
