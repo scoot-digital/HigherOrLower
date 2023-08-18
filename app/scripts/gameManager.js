@@ -1,3 +1,6 @@
+//  Initialise variable to represent whether the player has finished the current game or not
+let gameFinished = false;
+
 //  Initialise variable to represent whether the player has lost or not
 let playerLoss = false;
 
@@ -37,33 +40,55 @@ function initialiseListeners(){
  */
 function runGame(){
 
-    //  Continue the game until 5 cards have been dealt or the player has answered incorrectly
-    while (numCardsDealt < 5 && !playerLoss){
+    //  Change the variable representing if the game is finished
+    gameFinished = false;
 
-        //  Deal a playing card
-        dealCard();
+    //  If the player is not already in a game
+    if (!gameFinished){
 
-        //  Increment the number of cards dealt
-        numCardsDealt += 1;
+        //  Continue the game until 5 cards have been dealt or the player has answered incorrectly
+        while (numCardsDealt < 5 && !playerLoss){
 
-        //  Interact with player
-        playerInteraction(numCardsDealt -1);        
+            //  Deal a playing card
+            let newCard = dealCard();
 
-    }   
+            //  Print the list of cards dealt
+            console.log("Cards dealt: " + cardsDealt.length);
 
-    //  (After 5 cards have been dealt or the player has answered incorrectly)
-    //  If the player has answered incorrectly
-    if(playerLoss){
+            for (let i = 0; i < cardsDealt.length; i++) {
+                
+                console.log(cardsDealt[i]);
+                
+            };
 
-        //  Inform them and give them the opportunity to play again
-        console.log("Unforunately, that is incorrect. Would you like to restart?");
+            console.log("_______________________________");
 
-    //  Otherwise
+            //  Interact with player
+            playerInteraction(numCardsDealt -1);        
+
+        }   
+
+    //  If there is no current game being played
     } else {
 
-        //  Inform the player they have won
-        console.log("Congratualations, you won!");
+        //  (After 5 cards have been dealt or the player has answered incorrectly)
+        //  If the player has answered incorrectly
+        if(playerLoss){
+
+            //  Inform them and give them the opportunity to play again
+            console.log("Unforunately, that is incorrect. Would you like to restart?");
+
+        //  Otherwise
+        } else {
+
+            //  Inform the player they have won
+            console.log("Congratualations, you won!");
+
+            //  Change variable representing if the game is finished
+            gameFinished = true;
+
+        }
 
     }
 
-};
+}

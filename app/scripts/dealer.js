@@ -5,45 +5,78 @@
 function dealCard(){ 
 
     //  Create a new playing card 
-    const playingCard = new PlayingCard();  
+    let playingCard = new PlayingCard();  
+
+    //  If this is not the first card to be pulled
+    if (cardsDealt.length > 0) {
+
+        console.log("This is not the first card to be pulled");
+
+        //  Check the new card against the list of cards already dealt
+        for (let i = 0; i < cardsDealt.length; i++) { 
+
+            //  If the new card has already been pulled
+            if (playingCard.value == cardsDealt[i].value && playingCard.suit == cardsDealt[i].suit){
+
+                console.log("!!!!!!!!!!!!!  New card exists, pulling again");
+
+                //  Pull another card
+                dealCard();
+            
+            } else {}
+
+        }
+
+    }
+
+    console.log("New card is unique, adding to list of pulled cards");
+
+    //  Add the new card to the list of card dealt
+    cardsDealt.push(playingCard);
+
+    //  Increment the number of cards dealt
+    numCardsDealt += 1;
 
     //  Return the new playing card
     return playingCard;
 
 }
 
+
 /**
  * Handles interaction with the player (including asking questions and checking answers)
- * @param {num} value the number of cards dealt -1 (Used to determine which question to ask)
+ * @param {num} _interaction the number of cards dealt -1 (Used to determine which question to ask)
  */
-function playerInteraction(value){
+function playerInteraction(_interaction){
 
     //  If the player has not answered all the questions
-    if (value < questions.length){
+    if (_interaction < questions.length){
 
         //  Ask the next question
-        console.log(questions[value]);
+        console.log(questions[_interaction]);
         
         //  Get the answer from the player
-        response = prompt();
+        let response = prompt();
 
         //  -----   Check the answer    -----
 
         //  If the first question is being answered
-        if(value = 0){
+        if(_interaction = 0){
 
-            if (response = "lower" && cardsDealt[1] > cardsDealt[0]){
+            if (response = "lower" && cardsDealt[1].value > cardsDealt[0].value){
 
+                gameFinished = true;
                 playerLoss = true;
 
-            } else if (response = "higher" && cardsDealt[1] < cardsDealt[0]){
+            } else if (response = "higher" && cardsDealt[1].value < cardsDealt[0].value){
 
+                gameFinished = true;
                 playerLoss = true;
 
             }
 
         //  If the second question is being answered
-        } else if (value = 1){
+        } else if (_interaction = 1){
 
             
 
@@ -51,5 +84,5 @@ function playerInteraction(value){
 
 
     }
-    
+
 }
