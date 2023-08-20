@@ -83,6 +83,12 @@ function playerInteraction(_interaction){
         }
 
 
+    // If the player has answered all the questions
+    } else {
+
+        //  The game is finished
+        gameFinished = true;
+
     }
 
 }

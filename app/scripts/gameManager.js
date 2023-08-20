@@ -27,6 +27,17 @@ function initialiseListeners(){
     //  Initialise listener for the link that initiates the game when clicked
     document.querySelector("#gameInitiator").addEventListener("click", function() {  
 
+        //  If a game was previously complete
+        if (gameFinished){
+
+            //  Re-set all variables
+            gameFinished = false;
+            playerLoss = false;
+            numCardsDealt = 0;
+            cardsDealt = []                       
+
+        }
+
         //  Run the game when the game initiator link is clicked
         runGame();
         
@@ -40,55 +51,41 @@ function initialiseListeners(){
  */
 function runGame(){
 
-    //  Change the variable representing if the game is finished
-    gameFinished = false;
+    //  Continue the game until 5 cards have been dealt or the player has answered incorrectly
+    while (!gameFinished){
 
-    //  If the player is not already in a game
-    if (!gameFinished){
+        //  Deal a playing card
+        let newCard = dealCard();
 
-        //  Continue the game until 5 cards have been dealt or the player has answered incorrectly
-        while (numCardsDealt < 5 && !playerLoss){
+        //  Print the list of cards dealt
+        console.log("Cards dealt: " + cardsDealt.length);
 
-            //  Deal a playing card
-            let newCard = dealCard();
+        for (let i = 0; i < cardsDealt.length; i++) {
+            
+            console.log(cardsDealt[i]);
+            
+        };
 
-            //  Print the list of cards dealt
-            console.log("Cards dealt: " + cardsDealt.length);
+        console.log("_______________________________");
 
-            for (let i = 0; i < cardsDealt.length; i++) {
-                
-                console.log(cardsDealt[i]);
-                
-            };
+        //  Interact with player
+        playerInteraction(numCardsDealt -1);        
 
-            console.log("_______________________________");
+    }       
 
-            //  Interact with player
-            playerInteraction(numCardsDealt -1);        
+    //  (After 5 cards have been dealt or the player has answered incorrectly)
+    //  If the player has answered incorrectly
+    if(playerLoss){
 
-        }   
+        //  Inform them and give them the opportunity to play again
+        console.log("Unforunately, that is incorrect. Would you like to restart?");
 
-    //  If there is no current game being played
+    //  Otherwise
     } else {
 
-        //  (After 5 cards have been dealt or the player has answered incorrectly)
-        //  If the player has answered incorrectly
-        if(playerLoss){
+        //  Inform the player they have won
+        console.log("Congratualations, you won!");
 
-            //  Inform them and give them the opportunity to play again
-            console.log("Unforunately, that is incorrect. Would you like to restart?");
-
-        //  Otherwise
-        } else {
-
-            //  Inform the player they have won
-            console.log("Congratualations, you won!");
-
-            //  Change variable representing if the game is finished
-            gameFinished = true;
-
-        }
-
-    }
+    }    
 
 }
