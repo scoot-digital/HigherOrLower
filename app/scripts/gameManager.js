@@ -55,21 +55,19 @@ function runGame(){
     while (!gameFinished){
 
         //  Deal a playing card
-        let newCard = dealCard();
+        dealCard();
 
-        //  Print the list of cards dealt
-        console.log("Cards dealt: " + cardsDealt.length);
-
+        //  Log all the playing cards that have been dealt
         for (let i = 0; i < cardsDealt.length; i++) {
             
             console.log(cardsDealt[i]);
             
-        };
-
-        console.log("_______________________________");
+        }; 
 
         //  Interact with player
-        playerInteraction(numCardsDealt -1);        
+        playerInteraction(numCardsDealt -1); 
+        
+        console.log("_______________________________");
 
     }       
 

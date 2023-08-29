@@ -23,9 +23,6 @@ class PlayingCard{
          */
         this.suit = generateSuit();
 
-        //  Log this new playing card to the console
-        console.log(this.toString());
-
         /**
          * Determines the value to display for the playing card, based on its inherent value
          * @param {number} value the inherent value of the card

@@ -1,6 +1,7 @@
 /**
- * Returns a new playing card and incremenets the number of playing cards dealt
- * @return {PlayingCard} A new playing card
+ * Creates a new playing card object, increments the number of playing cards dealt 
+ * and calls for the new card to be displayed on screen
+ * 
  */
 function dealCard(){ 
 
@@ -10,18 +11,14 @@ function dealCard(){
     //  If this is not the first card to be pulled
     if (cardsDealt.length > 0) {
 
-        console.log("This is not the first card to be pulled");
-
         //  Check the new card against the list of cards already dealt
         for (let i = 0; i < cardsDealt.length; i++) { 
 
             //  If the new card has already been pulled
             if (playingCard.value == cardsDealt[i].value && playingCard.suit == cardsDealt[i].suit){
 
-                console.log("!!!!!!!!!!!!!  New card exists, pulling again");
-
                 //  Pull another card
-                dealCard();
+                return dealCard();
             
             } else {}
 
@@ -29,16 +26,56 @@ function dealCard(){
 
     }
 
-    console.log("New card is unique, adding to list of pulled cards");
-
     //  Add the new card to the list of card dealt
     cardsDealt.push(playingCard);
 
     //  Increment the number of cards dealt
     numCardsDealt += 1;
 
-    //  Return the new playing card
-    return playingCard;
+    //  Display the playing card on screen
+    displayCard(playingCard, numCardsDealt);
+
+}
+
+/**
+ *  Displays new playing card on-screen
+ * 
+ */
+function displayCard(_playingCard, _cardNumber){
+
+    console.log(_playingCard, _cardNumber);
+
+    let cardContainer;
+
+    switch (_cardNumber){
+
+        case 1:
+
+            cardContainer = document.querySelector("#card-1");
+            break;
+
+        case 2:
+
+            cardContainer = document.querySelector("#card-2");
+            break;
+
+        case 3:
+
+            cardContainer = document.querySelector("#card-3");
+            break;
+
+        case 4:
+
+            cardContainer = document.querySelector("#card-4");
+            break;
+
+        case 5:
+
+            cardContainer = document.querySelector("#card-5");
+            
+    } 
+
+    cardContainer.innerHTML = String(_playingCard.displayValue + " " + _playingCard.suit);
 
 }
 
