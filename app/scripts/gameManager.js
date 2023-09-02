@@ -52,10 +52,13 @@ function initialiseListeners(){
 function runGame(){
 
     //  Continue the game until 5 cards have been dealt or the player has answered incorrectly
-    while (!gameFinished){
+    if (!gameFinished){
 
         //  Deal a playing card
-        dealCard();
+        let newCard = dealCard();
+        
+        //  Display the playing card on screen
+        displayCard(newCard, numCardsDealt);
 
         //  Log all the playing cards that have been dealt
         for (let i = 0; i < cardsDealt.length; i++) {
