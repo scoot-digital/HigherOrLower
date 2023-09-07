@@ -1,0 +1,32 @@
+{
+
+    "interactions":[
+
+        {
+
+            "question": "Will the next card be higher or lower?",
+            "answers": ["Higher", "Lower"]
+
+        },
+        {
+
+            "question": "Will the value of the next card fall in between or outside these two?",
+            "answers": ["Inside", "Outside"]
+
+        },
+        {
+
+            "question": "What will the colour of the next card be?",
+            "answers": ["Red", "Black"]
+
+        },
+        {
+
+            "question": "What will the suit of the next card be?",
+            "answers": ["Clubs", "Diamonds", "Hearts", "Spades"]
+
+        }
+
+    ]
+
+}
