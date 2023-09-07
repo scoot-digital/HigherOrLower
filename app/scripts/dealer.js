@@ -2,6 +2,7 @@
  * Creates a new playing card object, increments the number of playing cards dealt 
  * and calls for the new card to be displayed on screen
  * 
+ * @returns {playingCard} a playing card object
  */
 function dealCard(){ 
 
@@ -78,13 +79,13 @@ function displayCard(_playingCard, _cardNumber){
     let newCard = document.createElement('div');
 
     //  Style the playing card div
-    newCard.className = "bg-secondary-subtle rounded"
+    newCard.className = "bg-secondary-subtle rounded p-3"
 
     //  Add the suit icon to the card
     let suitIcon = getSuitIcon(_playingCard.suit);
     
     //  Display the playing card's value
-    newCard.innerHTML = String(_playingCard.displayValue + " " + suitIcon);
+    newCard.innerHTML = String(_playingCard.displayValue + "<br/>" + suitIcon);
 
     //  Add the playing card to its container div
     cardContainer.appendChild(newCard);

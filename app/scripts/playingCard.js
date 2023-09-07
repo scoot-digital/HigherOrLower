@@ -34,19 +34,19 @@ class PlayingCard{
     
             if (a == 1){
     
-                a = "ace";
+                a = "A";
     
             } else if (a == 11){
     
-                a = "jack";
+                a = "J";
     
             } else if (a == 12){
     
-                a = "queen";
+                a = "Q";
     
             } else if (a == 13){
     
-                a = "king";
+                a = "K";
     
             } else {};
 
