@@ -8,6 +8,8 @@ function dealCard(){
     //  Create a new playing card 
     let playingCard = new PlayingCard();  
 
+    //  -----   Duplication check   -----   //
+
     //  If this is not the first card to be pulled
     if (cardsDealt.length > 0) {
 
@@ -26,6 +28,8 @@ function dealCard(){
 
     }
 
+    //  -----   End duplication check   -----   //
+
     //  Add the new card to the list of card dealt
     cardsDealt.push(playingCard);
 
@@ -36,6 +40,7 @@ function dealCard(){
 
 }
 
+
 /**
  *  Displays new playing card on-screen
  * 
@@ -44,33 +49,33 @@ function displayCard(_playingCard, _cardNumber){
 
     console.log(_playingCard, _cardNumber);
 
-    let cardContainer;
+    let cardPosition;
 
     switch (_cardNumber){
 
         case 1:
 
-            cardContainer = document.querySelector("#card-1");
+            cardPosition = document.querySelector("#card-1");
             break;
 
         case 2:
 
-            cardContainer = document.querySelector("#card-2");
+            cardPosition = document.querySelector("#card-2");
             break;
 
         case 3:
 
-            cardContainer = document.querySelector("#card-3");
+            cardPosition = document.querySelector("#card-3");
             break;
 
         case 4:
 
-            cardContainer = document.querySelector("#card-4");
+            cardPosition = document.querySelector("#card-4");
             break;
 
         case 5:
 
-            cardContainer = document.querySelector("#card-5");
+            cardPosition = document.querySelector("#card-5");
             
     } 
 
@@ -87,7 +92,7 @@ function displayCard(_playingCard, _cardNumber){
     newCard.innerHTML = String(_playingCard.displayValue + " " + suitIcon);
 
     //  Add the playing card to its container div
-    cardContainer.appendChild(newCard);
+    cardPosition.appendChild(newCard);
 
 
 }
@@ -133,6 +138,7 @@ function getSuitIcon(_cardSuit){
 
 }
 
+
 /**
  * Handles interaction with the player (including asking questions and checking answers)
  * @param {num} _interaction the number of cards dealt -1 (Used to determine which question to ask)
@@ -140,38 +146,13 @@ function getSuitIcon(_cardSuit){
 function playerInteraction(_interaction){
 
     //  If the player has not answered all the questions
-    if (_interaction < questions.length){
-
-        //  Ask the next question
-        console.log(questions[_interaction]);
+    if (_interaction < interactions.length){
         
-        //  Get the answer from the player
-        let response = input();
+        //  Create a new interaction
+        let interaction = new Interaction(_interaction);
 
-        //  -----   Check the answer    -----
-
-        //  If the first question is being answered
-        if(_interaction = 0){
-
-            if (response = "lower" && cardsDealt[1].value > cardsDealt[0].value){
-
-                gameFinished = true;
-                playerLoss = true;
-
-            } else if (response = "higher" && cardsDealt[1].value < cardsDealt[0].value){
-
-                gameFinished = true;
-                playerLoss = true;
-
-            }
-
-        //  If the second question is being answered
-        } else if (_interaction = 1){
-
-            
-
-        }
-
+        //  Display the new interaction
+        displayInteraction(interaction);        
 
     // If the player has answered all the questions
     } else {
@@ -180,5 +161,21 @@ function playerInteraction(_interaction){
         gameFinished = true;
 
     }
+
+}
+
+
+/**
+ *  Displays an interaction on-screen
+ *  @param {Interaction} _interaction interaction to be had with the player
+ * 
+ */
+function displayInteraction(_interaction){
+
+    //  Create DOM elements for questions
+    interactionContainer.innerHTML += _interaction.question + "<br/><br/>";
+
+    // run manageGame() when player hits answer button
+
 
 }

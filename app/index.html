@@ -79,6 +79,7 @@
         <script type="text/javascript" src="./scripts/gameManager.js"></script>
         <script type="text/javascript" src="./scripts/dealer.js"></script>
         <script type="text/javascript" src="./scripts/playingCard.js"></script>
+        <script type="text/javascript" src="./scripts/interaction.js"></script>
         
     <!-- Head Close -->
     </head>
@@ -193,43 +194,57 @@
 
                 <p class="fs-5 col-md-8">Simply guess how the next card pulled from the deck matches up against those already pulled.</p>  
 
-                <a href ="#" class="btn btn-primary mb-3 fs-5" id="gameInitiator">Let's play!</a> 
+                <a href ="#" class="btn btn-primary mb-3 fs-5" id="start-button">Let's play!</a> 
 
                 <hr class="col-3 col-md-2 mb-5">
 
-                <div class="row g-5 text-align-center">
+                <div class = "row row-cols-2">
 
-                    <div class="col"></div>
+                    <div class="col" id="interaction-container">
 
-                    <div class="col-md-3" id="card-3"></div>
+                        
 
-                    <div class="col"></div>
+                    </div>
 
-                </div> 
+                    <div class="col" id = "card-container">
 
-                <div class="row g-5 text-align-center">                    
+                        <div class="row g-5 text-align-center">
 
-                    <div class="col-md-3" id="card-1"></div>
+                            <div class="col"></div>
 
-                    <div class="col"></div>
+                            <div class="col-md-3" id="card-3"></div>
 
-                    <div class="col-md-3" id="card-5"></div>
-                    
-                    <div class="col"></div>
+                            <div class="col"></div>
 
-                    <div class="col-md-3" id="card-2"></div>
+                        </div> 
 
-                </div> 
+                        <div class="row g-5 text-align-center">                    
 
-                <div class="row g-5 text-align-center">
+                            <div class="col-md-3" id="card-1"></div>
 
-                    <div class="col"></div>
+                            <div class="col"></div>
 
-                    <div class="col-md-3" id="card-4"></div>
+                            <div class="col-md-3" id="card-5"></div>
+                            
+                            <div class="col"></div>
 
-                    <div class="col"></div>
+                            <div class="col-md-3" id="card-2"></div>
 
-                </div> 
+                        </div> 
+
+                        <div class="row g-5 text-align-center">
+
+                            <div class="col"></div>
+
+                            <div class="col-md-3" id="card-4"></div>
+
+                            <div class="col"></div>
+
+                        </div> 
+
+                    </div>
+
+                </div>
 
             </main>
 
