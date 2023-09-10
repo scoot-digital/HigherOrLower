@@ -1,5 +1,6 @@
 /**
  * A class which represents an interaction
+ * @param {number} _interaction the interaction number
  */
 class Interaction{
 
@@ -22,24 +23,75 @@ class Interaction{
          * @property {string} correctAnswer The correct answer for the question
          * (Applied later)
          */
-        this.question;
+        this.correctAnswer;
+
+        /**
+         *  @property {string} answerGiven The answer given for the question
+         *  (Applied later)
+         */
+        this.answerGiven;
+        
+    }
+
+    /**
+     * Records the answer given by the player for this question
+     * @param {string} _answer the text of the answer button clicked by the user
+     * @param {interaction} _interaction 
+     */
+    recordAnswer(_answer, _interaction){
+
+        //  Apply the answer given to the relevant attribute for this object
+        this.answerGiven = _answer;
+
+        //  Check the answer given
+        completeInteraction(_interaction);
 
     }
 
     /**
-     *  Evaluates if the player answered the questions correctly or not
-     *  @param {string} _answerGiven the answer given by the player
-     *  @returns {boolean} a value representing if the player answered the question correctly
+     *  Displays an interaction on-screen
+     *  @param {interaction} _interaction the question being displayed (passed into the evaluateAnswer() function of each answer button) 
      */
-    evaluateAnswer(){
+    displayInteraction(_interaction){
 
-        //  If the answer given by the player is correct
+        //  -----   Create DOM  -----   //
 
-        //  Advise the player
+        //  Create question text
+        const questionParagraph = document.createElement('p');
+        const questionText = document.createTextNode(this.question);
+        questionParagraph.appendChild(questionText);
 
-        //  If the answer given by the player is not true
+        //  Show the question text on screen
+        interactionContainer.appendChild(questionParagraph);
 
-        //  Advise the player
+        //  Create answer buttons
+        for (let i = 0; i < this.answers.length; i++) {
+
+            const answer = this.answers[i];
+            
+            //  Create answer buttons
+            const answerButton = document.createElement('a');
+            const answerText = document.createTextNode(answer);
+            answerButton.appendChild(answerText);
+            answerButton.title = answer;
+            answerButton.href = "#";
+            answerButton.classList.add("btn", "btn-primary", "mb-3", "me-3", "answer-button");
+
+            //  Create listener for button to check user's answer
+            answerButton.addEventListener("click", function() {  
+
+                //  Evaluate if the user's choice is correct
+                _interaction.recordAnswer(answer, _interaction);
+                
+            })
+
+            //  Show the question text on screen
+            interactionContainer.appendChild(answerButton);
+
+            //  Increment the number of interactions started
+            questionsAsked += 1;
+            
+        }
 
     }
 

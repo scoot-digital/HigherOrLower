@@ -7,10 +7,6 @@ let gameFinished = false;
 //  Declare variable to represent whether the player has lost or not
 let playerLoss = false;
 
-//  Declare variable to store the numbers of playing cards dealt
-//  (Used to name variables new playing cards are assigned to)
-let numCardsDealt = 0;
-
 //  Initialise a list of playing cards that have been dealth
 //  (Used to stop duplicate cards being drawn)
 let cardsDealt = [];
@@ -20,6 +16,9 @@ const interactionData = "./data/interactions.json";
 
 //  Initialise an array to store the interactions to be had with the player
 let interactions = [];
+
+//  Initialise a list list to store the number of questions asked of the player
+let questionsAsked = [];
 
 //  Initialise variable to represent containers for game
 let interactionContainer, cardContainer;
@@ -103,32 +102,33 @@ function startGame(){
     //  Re-set all variables
     gameFinished = false;
     playerLoss = false;
-    numCardsDealt = 0;
     cardsDealt = [];
     interactionContainer.innerHTML = "";
     cardContainer.innerHTML = emptyCardContainer;
 
-    //  Deal the first card
-    manageGame();
+    //  Create the first playing card playing card and start the game
+    manageGame(createCard());
 
 }
 
 
 /**
  * Deals the next playing card and asks the corresponding question, or ends the game if the player answers incorrectly
+ * @param {PlayingCard} _playingCard the next playing card to display
  * 
  */
-function manageGame(){
+function manageGame(_playingCard){
+    
+    //  Display the next playing card
+    _playingCard.displayCard(_playingCard);
     
     //  If less than 5 cards have been drawn and the player hasn't answered any questions incorrectly
     if (!gameFinished){
 
-        //  Deal a new playing card and display it on the screen
-        displayCard(dealCard(), numCardsDealt);
-
         //  Interact with player
-        playerInteraction(numCardsDealt -1);  
-    
+        startInteraction();  
+
+   
     //  If 5 cards have been dealt or the player has answered incorrectly
     } else {
         

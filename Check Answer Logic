@@ -1,0 +1,23 @@
+//  -----   Check the answer    -----
+
+//  If the first question is being answered
+if(_interaction = 0){
+
+    if (response = "lower" && cardsDealt[1].value > cardsDealt[0].value){
+
+        gameFinished = true;
+        playerLoss = true;
+
+    } else if (response = "higher" && cardsDealt[1].value < cardsDealt[0].value){
+
+        gameFinished = true;
+        playerLoss = true;
+
+    }
+
+//  If the second question is being answered
+} else if (_interaction = 1){
+
+    
+
+}

@@ -5,7 +5,7 @@
         {
 
             "question": "Will the next card be higher or lower?",
-            "answers": ["Higher", "Lower"]
+            "answers": ["Higher", "Lower", "Equal"]
 
         },
         {
