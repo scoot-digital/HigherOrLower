@@ -96,8 +96,7 @@ function initialiseListeners(){
 function startGame(){
 
     //  Disable start button
-    startButton.classList.add("disabled");
-    startButton.setAttribute('aria-disabled', true);
+    disableButton([startButton]);
 
     //  Re-set all variables
     gameFinished = false;
@@ -106,8 +105,11 @@ function startGame(){
     interactionContainer.innerHTML = "";
     cardContainer.innerHTML = emptyCardContainer;
 
+    //  Draw the first playing card
+    const newCard = createCard();
+
     //  Create the first playing card playing card and start the game
-    manageGame(createCard());
+    manageGame();
 
 }
 
@@ -117,17 +119,13 @@ function startGame(){
  * @param {PlayingCard} _playingCard the next playing card to display
  * 
  */
-function manageGame(_playingCard){
-    
-    //  Display the next playing card
-    _playingCard.displayCard(_playingCard);
+function manageGame(){
     
     //  If less than 5 cards have been drawn and the player hasn't answered any questions incorrectly
     if (!gameFinished){
 
         //  Interact with player
         startInteraction();  
-
    
     //  If 5 cards have been dealt or the player has answered incorrectly
     } else {
@@ -135,8 +133,12 @@ function manageGame(_playingCard){
         //  If the player has answered incorrectly
         if(playerLoss){
 
-            //  Inform them and give them the opportunity to play again
-            console.log("Unforunately, that is incorrect. Would you like to restart?");
+            const lossParagraph = document.createElement('p');
+            const lossText = document.createTextNode("Unforunately, that is incorrect. Would you like to restart?");
+            lossParagraph.appendChild(lossText);
+
+            //  Show the question text on screen
+            interactionContainer.appendChild(lossParagraph);
 
         //  Otherwise
         } else {
@@ -147,5 +149,21 @@ function manageGame(_playingCard){
         }           
 
     }
+
+}
+
+/**
+ * Disables a button
+ * @param {List} _buttonList 
+ */
+function disableButton(_buttonList){
+
+    _buttonList.forEach(b => {
+
+        b.classList.add("disabled");
+        b.setAttribute('aria-disabled', true);    
+        
+    });
+
 
 }

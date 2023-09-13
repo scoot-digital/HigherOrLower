@@ -20,6 +20,11 @@ class Interaction{
         this.answers = interactions[_interaction].answers;
 
         /**
+         *  @property {list} answerButtons The list to store all the buttons for this interaction
+         */
+        this.answerButtons = [];
+
+        /**
          * @property {string} correctAnswer The correct answer for the question
          * (Applied later)
          */
@@ -36,23 +41,22 @@ class Interaction{
     /**
      * Records the answer given by the player for this question
      * @param {string} _answer the text of the answer button clicked by the user
-     * @param {interaction} _interaction 
      */
-    recordAnswer(_answer, _interaction){
+    recordAnswer(_answer){
 
         //  Apply the answer given to the relevant attribute for this object
         this.answerGiven = _answer;
 
         //  Check the answer given
-        completeInteraction(_interaction);
+        completeInteraction(this);
 
     }
 
     /**
      *  Displays an interaction on-screen
-     *  @param {interaction} _interaction the question being displayed (passed into the evaluateAnswer() function of each answer button) 
+     * 
      */
-    displayInteraction(_interaction){
+    displayInteraction(){
 
         //  -----   Create DOM  -----   //
 
@@ -77,21 +81,29 @@ class Interaction{
             answerButton.href = "#";
             answerButton.classList.add("btn", "btn-primary", "mb-3", "me-3", "answer-button");
 
+            let interaction = this;
+
             //  Create listener for button to check user's answer
             answerButton.addEventListener("click", function() {  
 
-                //  Evaluate if the user's choice is correct
-                _interaction.recordAnswer(answer, _interaction);
+                //  Disable all of the buttons for this interaction
+                disableButton(interaction.answerButtons);   
+
+                //  Record the user's answer
+                interaction.recordAnswer(answer);
                 
             })
 
-            //  Show the question text on screen
+            //  Show the answer button on screen
             interactionContainer.appendChild(answerButton);
 
-            //  Increment the number of interactions started
-            questionsAsked += 1;
-            
+            //  Add the button to the list of answer buttons relating to this interaction
+            this.answerButtons.push(answerButton);
+
         }
+        
+        //  Increment the number of interactions started
+        questionsAsked.push(this);
 
     }
 

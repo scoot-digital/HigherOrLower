@@ -48,20 +48,21 @@ function createCard(){
  */
 function startInteraction(){
 
-    //  If the player has not answered all the questions
-    if (cardsDealt.length < interactions.length){
-        
+    //  If the player has answered all the questions
+    if (cardsDealt.length > interactions.length){
+
+        //  The game is finished
+        gameFinished = true;      
+        manageGame();       
+
+    // If the player has not answered all the questions
+    } else {
+
         //  Create a new interaction
         let interaction = new Interaction(cardsDealt.length -1);
 
         //  Display the new interaction
-        interaction.displayInteraction(interaction);        
-
-    // If the player has answered all the questions
-    } else {
-
-        //  The game is finished
-        gameFinished = true;
+        interaction.displayInteraction();  
 
     }
 
@@ -77,7 +78,7 @@ function completeInteraction(_interaction){
     console.log(`Question asked: ${_interaction.question}, answer given: ${_interaction.answerGiven}`);
 
     //  If all the questions haven't been answered
-    if(questionsAsked < interactions.length){
+    if(questionsAsked.length <= interactions.length){
 
         //  Deal the next card
         const nextCard = createCard();
@@ -91,23 +92,25 @@ function completeInteraction(_interaction){
     //  If the first question is being answered
     if(questionsAsked.length == 1){
 
+        console.log("checking anwswer!");
+
         //  If the second card drawn is higher than the first
         if (cardsDealt[1].value > cardsDealt[0].value) {
 
             //  Apply the relevant answer
-            _interaction.correctAnswer = "higher";  
+            _interaction.correctAnswer = "Higher";  
         
         //  If the second card is lower than the first
         } else if (cardsDealt[1].value < cardsDealt[0].value) {
 
             //  Apply the relevant answer
-            _interaction.correctAnswer = "lower";
+            _interaction.correctAnswer = "Lower";
         
         //  If the second card drawn is equal to the first
         } else {
 
             //  Apply the relevant answer
-            _interaction.correctAnswer = "equal";
+            _interaction.correctAnswer = "Equal";
 
         }
 
@@ -115,13 +118,12 @@ function completeInteraction(_interaction){
     } else if (questionsAsked.length == 2){
 
         //  If the third card falls between the two cards
-        _interaction.correctAnswer = "whaa"
+        _interaction.correctAnswer = "Inside";
 
     }  
 
-
-
-      
+    console.log(`Answer given: ${_interaction.answerGiven} - Correct answer: ${_interaction.correctAnswer}`);
+          
 
     //  -----   Evaluate answer -----   //
 
@@ -137,6 +139,6 @@ function completeInteraction(_interaction){
     }   
 
     //  Recall function to ask the next question (if the player is correct) or end the game (if they are not correct)
-    manageGame(nextCard);    
+    manageGame();    
 
 }
