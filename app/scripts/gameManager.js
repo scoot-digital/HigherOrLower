@@ -11,17 +11,17 @@ let playerLoss = false;
 //  (Used to stop duplicate cards being drawn)
 let cardsDealt = [];
 
+//  Initialise a list list to store the number of questions asked of the player
+let questionsAsked = [];
+
 //  Create reference to json file which stores player interactions
 const interactionData = "./data/interactions.json";
 
 //  Initialise an array to store the interactions to be had with the player
 let interactions = [];
 
-//  Initialise a list list to store the number of questions asked of the player
-let questionsAsked = [];
-
 //  Initialise variable to represent containers for game
-let interactionContainer, cardContainer;
+let interactionsContainer, cardContainer;
 
 //  Declare variable to hold HTML for empty card container
 const emptyCardContainer = '<div class="col" id = "card-container"><div class="row g-5 text-align-center"><div class="col"></div><div class="col-md-3" id="card-3"></div><div class="col"></div></div> <div class="row g-5 text-align-center"><div class="col-md-3" id="card-1"></div><div class="col"></div><div class="col-md-3" id="card-5"></div><div class="col"></div><div class="col-md-3" id="card-2"></div></div><div class="row g-5 text-align-center"><div class="col"></div><div class="col-md-3" id="card-4"></div><div class="col"></div></div></div>'
@@ -42,7 +42,7 @@ function intialiseVariables(){
     startButton = document.querySelector("#start-button");
     
     //  Apply reference to container for player interactions initialised above
-    interactionContainer = document.querySelector("#interaction-container");
+    interactionsContainer = document.querySelector("#interactions-container");
 
     //  Apply reference to container for playing cards initialised above
     cardContainer = document.querySelector("#card-container");
@@ -102,11 +102,12 @@ function startGame(){
     gameFinished = false;
     playerLoss = false;
     cardsDealt = [];
-    interactionContainer.innerHTML = "";
+    questionsAsked = [];
+    interactionsContainer.innerHTML = "";
     cardContainer.innerHTML = emptyCardContainer;
 
     //  Draw the first playing card
-    const newCard = createCard();
+    createCard();
 
     //  Create the first playing card playing card and start the game
     manageGame();
@@ -129,24 +130,51 @@ function manageGame(){
    
     //  If 5 cards have been dealt or the player has answered incorrectly
     } else {
+
+        //  Initialise a message to tell the player the game is over
+        const outcomeParagraph = document.createElement('p');  
+        //  Initialise variable to hold outcome
+        let outcomeText;      
+        //  Style the outcome paragraph
+        outcomeParagraph.classList.add("fs-4");
+
+        //  Create the restart link
+        const restartLink = document.createElement('a');
+        const restartText = "Restart";
+        const restartTextNode = document.createTextNode(restartText);
+        restartLink.appendChild(restartTextNode);
+        restartLink.title = restartText;
+        restartLink.href = "#";
+        restartLink.classList.add("mb-3", "me-3", "restart-button"); 
+
+        //  Create listener for link to be able to restart the game
+        restartLink.addEventListener("click", function() {  
+
+            //  Restart the game
+            startGame();
+            
+        })
         
-        //  If the player has answered incorrectly
+        //  If the player has lost
         if(playerLoss){
+            
+            //  Apply the outcome text to the variable initialised above
+            outcomeText = document.createTextNode("Unforunately, that is incorrect. ");
+            outcomeParagraph.appendChild(outcomeText);
 
-            const lossParagraph = document.createElement('p');
-            const lossText = document.createTextNode("Unforunately, that is incorrect. Would you like to restart?");
-            lossParagraph.appendChild(lossText);
-
-            //  Show the question text on screen
-            interactionContainer.appendChild(lossParagraph);
-
-        //  Otherwise
+        //  If the player has won
         } else {
 
-            //  Inform the player they have won
-            console.log("Congratualations, you won!");
+            //  Apply the outcome text to the variable initialised above 
+            outcomeText = document.createTextNode("Congratualations, you won! ");
+            outcomeParagraph.appendChild(outcomeText);
 
-        }           
+        }              
+        
+        //  Add the restart link to the outcome paragraph
+        outcomeParagraph.appendChild(restartLink);
+        //  Inform the player
+        interactionsContainer.insertBefore(outcomeParagraph, interactionsContainer.firstChild);
 
     }
 

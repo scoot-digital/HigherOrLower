@@ -14,11 +14,17 @@ function createCard(){
     //  If this is not the first card to be pulled
     if (cardsDealt.length > 0) {
 
+        console.log(`Cards dealt length: ${cardsDealt.length}`);
+
         //  Check the new card against the list of cards already dealt
         for (let i = 0; i < cardsDealt.length; i++) { 
 
+            console.log(`Checking newly created card for duplication against card no. ${i}`);
+
             //  If the new card has already been pulled
             if (playingCard.value == cardsDealt[i].value && playingCard.suit == cardsDealt[i].suit){
+
+                console.log("Card is a duplicate");
 
                 //  Pull another card
                 return createCard();
@@ -29,10 +35,15 @@ function createCard(){
 
     }
 
+    console.log("Card is not a duplicate");
+
     //  -----   End duplication check   -----   //
 
     //  Add the new card to the list of card dealt
     cardsDealt.push(playingCard);
+
+    //  Display playing card
+    playingCard.displayCard();
 
     //  Log the new card
     console.log(`Card dealt: ${playingCard.toString()}`);
@@ -80,10 +91,14 @@ function completeInteraction(_interaction){
     //  If all the questions haven't been answered
     if(questionsAsked.length <= interactions.length){
 
+        console.log("It thinks it needs to draw a new card");
+
         //  Deal the next card
         const nextCard = createCard();
 
     }
+
+    console.log("Question was answered");
 
     //  -----   Determine correct answer for question    -----   //    
 
@@ -118,9 +133,70 @@ function completeInteraction(_interaction){
     } else if (questionsAsked.length == 2){
 
         //  If the third card falls between the two cards
-        _interaction.correctAnswer = "Inside";
+        if ((cardsDealt[2].value - cardsDealt[0].value) * (cardsDealt[2].value - cardsDealt[1].value) <= 0){
 
-    }  
+            _interaction.correctAnswer = "Inside";
+            
+        //  If the third card does not fall between the two cards
+        }   else {
+
+            _interaction.correctAnswer = "Outside";
+
+        }
+
+    //  If the third answer is being answered
+    } else if (questionsAsked.length == 3){
+
+        
+        console.log(`Card suit is: ${cardsDealt[3].suit}`);
+
+        switch (cardsDealt[3].suit){
+
+            case "Diamonds": 
+            case "Hearts":
+
+                _interaction.correctAnswer = "Red";
+                break;
+
+            case "Clubs":
+            case "Spades":
+
+                _interaction.correctAnswer = "Black"
+                break;
+
+        }
+
+    } else if (questionsAsked.length == 4){
+
+        
+        console.log(`Card suit is: ${cardsDealt[4].suit}`);
+
+        switch (cardsDealt[4].suit){
+            
+
+            case "Clubs":
+
+                _interaction.correctAnswer = "Clubs"
+                break;
+
+            case "Diamonds":
+
+                _interaction.correctAnswer = "Diamonds"
+                break;
+
+            case "Hearts":
+
+                _interaction.correctAnswer = "Hearts"
+                break;
+
+            case "Spades":
+
+                _interaction.correctAnswer = "Spades"
+                break;
+
+        }
+
+    }
 
     console.log(`Answer given: ${_interaction.answerGiven} - Correct answer: ${_interaction.correctAnswer}`);
           

@@ -35,7 +35,24 @@ class Interaction{
          *  (Applied later)
          */
         this.answerGiven;
-        
+
+        /**
+         *  
+         * 
+         */
+        this.questionContainer;
+
+        /**
+         * 
+         * 
+         */
+        this.answerContainer;
+
+        /**
+         * 
+         * 
+         */
+        this.interactionContainer;
     }
 
     /**
@@ -60,13 +77,24 @@ class Interaction{
 
         //  -----   Create DOM  -----   //
 
+        //  Create containers
+        const interactionContainer = document.createElement('div');
+        interactionContainer.classList.add("interaction-container");
+
+        const questionContainer = document.createElement('div');
+        questionContainer.classList.add("question-container");
+
+        const answerContainer = document.createElement('div');
+        answerContainer.classList.add("answer-container");
+
         //  Create question text
         const questionParagraph = document.createElement('p');
+        questionParagraph.classList.add("fs-4");
         const questionText = document.createTextNode(this.question);
         questionParagraph.appendChild(questionText);
 
-        //  Show the question text on screen
-        interactionContainer.appendChild(questionParagraph);
+        //  Show the question to its container
+        questionContainer.appendChild(questionParagraph);
 
         //  Create answer buttons
         for (let i = 0; i < this.answers.length; i++) {
@@ -79,15 +107,18 @@ class Interaction{
             answerButton.appendChild(answerText);
             answerButton.title = answer;
             answerButton.href = "#";
-            answerButton.classList.add("btn", "btn-primary", "mb-3", "me-3", "answer-button");
-
-            let interaction = this;
+            answerButton.classList.add("btn", "btn-primary", "mb-3", "me-3", "answer-button"); 
+            
+            const interaction = this;
 
             //  Create listener for button to check user's answer
             answerButton.addEventListener("click", function() {  
 
-                //  Disable all of the buttons for this interaction
-                disableButton(interaction.answerButtons);   
+                //  Make the questions of this interaction smaller
+                interaction.questionContainer.firstChild.classList.remove("fs-4");
+
+                //  Hide the buttons for this interaction
+                interaction.answerContainer.classList.add("d-none");                  
 
                 //  Record the user's answer
                 interaction.recordAnswer(answer);
@@ -95,12 +126,24 @@ class Interaction{
             })
 
             //  Show the answer button on screen
-            interactionContainer.appendChild(answerButton);
+            answerContainer.appendChild(answerButton);
 
             //  Add the button to the list of answer buttons relating to this interaction
             this.answerButtons.push(answerButton);
 
-        }
+        } 
+
+        //  Add the interaction elements to the interaction container
+        interactionContainer.appendChild(questionContainer);
+        interactionContainer.appendChild(answerContainer);
+
+        //  Store the interaction's DOM elements as attributes of this interaction
+        this.interactionContainer = interactionContainer
+        this.questionContainer = questionContainer;
+        this.answerContainer = answerContainer;
+
+        //  Add this interaction's DOM elements to the interaction container
+        interactionsContainer.insertBefore(interactionContainer, interactionsContainer.firstChild);
         
         //  Increment the number of interactions started
         questionsAsked.push(this);
@@ -113,7 +156,7 @@ class Interaction{
      */
     toString() {
 
-        return String("question = " + this.question + ", answers = " + this.answers + ", correct answer = " + this.correctAnswer);
+        return String(`question = ${this.question}, answers = ${this.answers}, correct answer = ${this.correctAnswer}`);
         
     }
 
